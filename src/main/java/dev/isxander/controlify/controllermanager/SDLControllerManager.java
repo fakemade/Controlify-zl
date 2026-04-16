@@ -68,7 +68,7 @@ public class SDLControllerManager extends AbstractControllerManager {
     public void tick(boolean outOfFocus) {
         if (event == null) {
             logger.error("SDL_Event has somehow been set to null. Recreating...");
-            event = new SDL_Event();
+            event = new SdlEventTypes.SDL_Event();
         }
 
         while (SDL_PollEvent(event)) {
