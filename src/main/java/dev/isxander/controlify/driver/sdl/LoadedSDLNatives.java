@@ -49,8 +49,8 @@ public class LoadedSDLNatives {
         }
 
         SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "1");
-        // Enhanced reports can trigger unaligned-memory access on some Android SDL builds (e.g. ZalithLauncher)
-        if (!CUtil.IS_POJAV_LAUNCHER) {
+        // Enhanced reports can trigger unaligned-memory access on Android SDL builds (e.g. ZalithLauncher, PojavLauncher)
+        if (!CUtil.IS_ANDROID) {
             SDL_SetHint(SDL_HINT_JOYSTICK_ENHANCED_REPORTS, "1");
         }
         SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_STEAM, "1");

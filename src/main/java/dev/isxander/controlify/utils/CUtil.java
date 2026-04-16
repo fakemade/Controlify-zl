@@ -37,6 +37,11 @@ public class CUtil {
 
     public static final boolean IS_POJAV_LAUNCHER = System.getenv("POJAV_NATIVEDIR") != null;
 
+    // Detects Android-based launchers (ZalithLauncher, PojavLauncher, etc.)
+    // ZalithLauncher sets -Dos.version=Android-XX; PojavLauncher sets POJAV_NATIVEDIR.
+    public static final boolean IS_ANDROID = System.getProperty("os.version", "").contains("Android")
+            || IS_POJAV_LAUNCHER;
+
     /**
      * Opens a URI using the system's default handler.
      * Required because Minecraft's implementation converts all URIs to URLs,
