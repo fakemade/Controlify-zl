@@ -48,13 +48,19 @@ public class LoadedSDLNatives {
             }
         }
 
-        SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "1");
-        // Enhanced reports can trigger unaligned-memory access on Android SDL builds (e.g. ZalithLauncher, PojavLauncher)
-        if (!CUtil.IS_ANDROID) {
+        if (CUtil.IS_ANDROID) {
+            // On Android-based launchers (ZalithLauncher, PojavLauncher):
+            // HIDAPI causes SIGBUS (BUS_ADRALN) crashes in SDL_UpdateJoysticks+0x288 due to
+            // unaligned memory access in the HID report processing path.
+            // Disable HIDAPI and let SDL use the Android native Input API instead.
+            SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "0");
+            logger.log("Android detected: HIDAPI disabled, using Android native input API to avoid SIGBUS crash");
+        } else {
+            SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI, "1");
             SDL_SetHint(SDL_HINT_JOYSTICK_ENHANCED_REPORTS, "1");
+            SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_STEAM, "1");
+            SDL_SetHint(SDL_HINT_JOYSTICK_ROG_CHAKRAM, "1");
         }
-        SDL_SetHint(SDL_HINT_JOYSTICK_HIDAPI_STEAM, "1");
-        SDL_SetHint(SDL_HINT_JOYSTICK_ROG_CHAKRAM, "1");
         SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
         SDL_SetHint(SDL_HINT_JOYSTICK_LINUX_DEADZONES, "1");
 
