@@ -24,7 +24,7 @@ import dev.isxander.controlify.utils.CUtil;
 import dev.isxander.controlify.utils.ControllerUtils;
 import dev.isxander.controlify.utils.log.ControlifyLogger;
 import dev.isxander.sdl3java.api.events.SDL_EventFilter;
-import dev.isxander.sdl3java.api.events.events.SDL_Event;
+import dev.isxander.sdl3java.api.events.SdlEventTypes;
 import dev.isxander.sdl3java.api.gamepad.SDL_Gamepad;
 import dev.isxander.sdl3java.api.iostream.SDL_IOStream;
 import dev.isxander.sdl3java.api.joystick.SDL_Joystick;
@@ -48,7 +48,7 @@ import static dev.isxander.sdl3java.api.joystick.SdlJoystick.*;
 
 public class SDLControllerManager extends AbstractControllerManager {
 
-    private SDL_Event event = new SDL_Event();
+    private SdlEventTypes.SDL_Event event = new SdlEventTypes.SDL_Event();
 
     // must keep a reference to prevent GC from collecting it and the callback failing
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -266,7 +266,7 @@ public class SDLControllerManager extends AbstractControllerManager {
 
     private static class EventFilter implements SDL_EventFilter {
         @Override
-        public boolean filterEvent(Pointer userdata, SDL_Event event) {
+        public boolean filterEvent(Pointer userdata, SdlEventTypes.SDL_Event event) {
             switch (event.type) {
                 case SDL_EVENT_JOYSTICK_ADDED:
                 case SDL_EVENT_JOYSTICK_REMOVED:
